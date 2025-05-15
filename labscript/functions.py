@@ -35,6 +35,9 @@ def ramp(duration, initial, final):
     """
     m = (final - initial)/duration
     return lambda t: m*t + initial
+def turnOn_ramp(duration, initial, final):
+    a = (final-initial)
+    return lambda t: initial + a *( 6*(t**5/duration**5) - 15*(t**4/duration**4) + 10 * (t**3/duration**3))
 
 def sine(duration, amplitude, angfreq, phase, dc_offset):
     """Defines a sine wave.

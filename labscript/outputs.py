@@ -603,7 +603,15 @@ class AnalogQuantity(Output):
                     }
                 )
         return truncation * duration
-
+    # Start: Added by Simon (2020)
+    def turnOn(self, t, duration, initial, final, samplerate, units=None, truncation=1.):
+        self._check_truncation(truncation)
+        if truncation > 0:
+            self.add_instruction(t, {'function': functions.turnOn_ramp(round(t + duration, 10) - round(t, 10), initial, final), 'description': 'custom ramp',
+                                      'initial time': t, 'end time': t + truncation*duration, 'clock rate': samplerate, 'units': units})
+        return truncation*duration
+    # End: Added by Simon (2020)    
+        
     def sine(
         self,
         t,
